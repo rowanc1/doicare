@@ -1,0 +1,341 @@
+<div id="probability-of-a-spill">
+
+    <div icare=">1">
+    <p>The Canadian Joint Review Panel for the proposed Enbridge Northern Gateway Project recommended that the federal government approve the project, subject to 209 required conditions. </p>
+    <blockquote>
+      <p class="text-info">According to Northern Gateway risk assessments, the probability of a tanker spill of any size would be about 0.4 per cent in any given year. The company estimated the return period (average interval between events) would be 250 years for a marine spill.
+      <span icare=">2">Northern Gateway said the probability of
+a full-bore rupture on the oil pipeline would be
+0.2 per cent in a given year, based on an estimated return period of 464 years.</span>
+      </p>
+      <small class="pull-right">National Energy Board &amp; Canadian Environmental Assessment Agency (2013-12-19) <cite title="Connections - Volume 1"><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s51" target="_blank">Joint Review Panel</a></cite></small>
+    </blockquote>
+      <div icare=">2">
+
+      <p>One curiosity of their report is the risk numbers. Let us crunch their numbers for fun!
+      This may be of interest as they should perhaps change their calculations in future.
+      They calculated the <i>expected time</i> until the first spill, however the <i>median time</i>, for example, until a spill may be more informative.</p>
+
+      <p>Northern Gateway estimates the probability of a major spill on the pipeline is 0.2%<span icare=">3">  ($p = 0.002$)</span> per year<span icare=">3">; they double this risk on the tanker transport side ($p=0.004$)</span>.
+      It is a simple calculation from there to show that the expected number of years until the first spill is 500 years.
+       </p>
+    <div icare=">3">
+       <p> That is, if $p$ is the probability of a spill each year, the expected time to the first spill, $\text{E}[s]$, is:</p>
+
+       $$\text{E}[s] = \frac{1}{p}$$
+    </div>
+
+      <div icare="=5">
+        <hr>
+        <h4>Here is the reasoning</h4>
+        <p>The probability of the first spill being in year $n+1$ is the probability there is no spill in the first $n$ years, $(1-p)^n$, times the probability, $p$, that there is a spill in year $n+1$.  This makes the expected year in which the first spill occurs:</p>
+
+        $$\text{E}[s] = \sum_{n=0}^\infty (n+1)(1-p)^np$$
+
+        <p>This fortunately is a well-known infinite sum.  To obtain a closed form for it we need to make some observations.  First note that, when $q&lt;1$:</p>
+
+        $$1 = \sum_{n=0}^\infty q^n - q( \sum_{n=0}^\infty q^n)$$
+
+        <p>so that</p>
+
+        $$\frac{1}{(1-q)} = \sum_{n=0}^\infty q^n$$
+
+        <p>differentiating this with respect to $q$ gives:</p>
+
+        $$\frac{1}{(1-q)^2} = \sum_{n=1}^\infty nq^{n-1} = \sum_{n=0}^\infty (n+1)q^n$$
+
+        <p>so that</p>
+
+        $$\text{E}[s] =  \frac{1}{(1-(1-p))^2}p = \frac{1}{p}$$
+
+        <p>Thus, the Joint Review Panel got their math correct, although they could revisit <a href="http://en.wikipedia.org/wiki/Significant_figures">significant digits</a>.</p>
+
+        <hr>
+
+      </div>
+      <div icare=">3">
+
+      <p>Interestingly, you can reverse this calculation! That is, if one has a pipeline with a first spill (assuming this has happened roughly at the expected value) one can calculate $p$. Consider the <a href="http://en.wikipedia.org/wiki/Kalamazoo_River_oil_spill">Kalamazoo oil spill</a> in 2010, the largest on-land oil spill, and one of the costliest spills, in U.S. history. Of course, as it was maintained by the same company who is now proposing to build the Northern Gateway, it cannot be viewed as being completely irrelevant. This pipeline was described by the company as an aging pipeline. It was, in fact, built in the sixties so it was roughly 50 years old when it ruptured. Using this as baseline, this fixes the risk of a spill at 2% per year.</p>
+
+      $$p = \frac{1}{\text{E}[s]} = \frac{1}{50} = 0.02$$
+      </div>
+      <p icare=">3">This is interesting, as the review panel has therefore accepted the company's assertion that (due to improved technology) the probability of a spill has decreased by an <i>order of magnitude</i> (a factor of 10) since then.
+      Furthermore, on the basis of this the review panel was happy to state that the  first expected pipeline spill is in 500 years. Recalling that the Kalamazoo spill was in 2010 and it was the same company which was responsible for maintaining that line (in an easily accessible area), this is a significant improvement!</p>
+      <div icare=">2">
+
+      <p><span icare=">3">There is another aspect of this calculation that is interesting: the review panel supplied the <i>expected value</i>.</span> An expected value is heavily influenced by large values with very low probabilities.
+      <span icare="<5"> It is possible, though unlikely, that there will not be a spill for thousands of years!</span>
+      <span icare="=5">As discussed above, this calculation is a summation of the probability of a spill over all years (i.e. an infinite sum), so there are lots of large values.</span>
+      A different calculation is of the median, which is the time at which there is a 50% probability a spill will already have occurred.</p>
+
+      <p>This suggests:</p>
+      <ul>
+        <li icare=">3">for $p=0.2$%, within 346 years there is a 50% chance of a major spill (still negligible)</li>
+        <li icare=">3">for $p=2.0$%, within 34 years there is a 50% chance of a major spill (not negligible, and in line with what happened)</li>
+        <li>for $p=$ <span data-var="p_f_pick_50" class="TKAdjustableNumber" data-format="p_f_pick"></span>, within <span data-var="et2fail_50" data-format="%.1f"></span> years there is a 50% chance of a major spill</li>
+      </ul>
+      <p>In fact, surely the panel should be thinking about the probability that there is no spill over the lifetime of the pipeline. Suppose the pipeline is to be decommissioned in 30 years, let us calculate the probability that there will be no spill in that time:</p>
+
+      <ul>
+        <li icare=">3">$p= 0.2$% no spill for 30 years $(1-p)^{30} = 94$% (seems good)</li>
+        <li icare=">3">$p= 2.0$%  no spill for 30 years $(1-p)^{30} = 55$%   (seems not so good)</li>
+        <li>$p=$ <span data-var="p_f_pick_years" class="TKAdjustableNumber" data-format="p_f_pick"></span> no spill for
+        $x=$ <span data-var="years2fail" class="TKAdjustableNumber" data-format="%.1f"></span>
+        years $(1-p)^{x} =$
+        <span data-var="years2fail_p" data-format="percent"></span>
+        </li>
+      </ul>
+
+      <hr>
+      </div>
+      </div>
+
+      <h4><strong>Risky Business</strong>: What risk of an oil spill are you comfortable with?</h4>
+      <p>In order to gain insight into the potential risk of an oil spill, you can play with the parameters below! You can <i>drag</i> the blue highlighted numbers to adjust the interactive graph.</p>
+
+      <p>Let's say the probability of a spill is <span data-var="p_f_pick" class="TKAdjustableNumber" data-format="p_f_pick"></span> per year (Use <a href="#table1">Table 1</a>). Let's say you are comfortable with a <span data-var="beta" class="TKAdjustableNumber" data-min="1" data-max="99" data-format="%.0f%%"></span> probability of <i>not</i> having a spill. <b>With your risk tolerance and this probability, the pipeline should not be operated longer than <span data-var="et2fail" data-format="%.1f"></span> years.</b></p>
+
+
+      <p>When the probability of a spill is <span data-var="p_f_pick" data-format="p_f_pick"></span> the average interval between spills (the return period) as calculated by Northern Gateway is <span data-var="years2fail_enbridge" data-format="%.1f"></span> years. <b>At <span data-var="years2fail_enbridge" data-format="%.1f"></span> years there is a <span data-var="oilspill_per_enbridge" data-format="percent"></span> chance there has already been an oil spill.</b>
+      </p>
+
+      <div class="figure" id="figure1">
+        <div style="width:500px">
+        <div style="position:absolute;top:25px;right:22px;z-index:2;">
+        <span data-var="beta" data-format="%.0f%%"></span> probability
+        <br>
+        Return Period
+        </div></div>
+      </div>
+
+      <p class="text-center">Figure 1: Probability of no spill when the failure rate is <span data-var="p_f_pick" class="TKAdjustableNumber" data-format="p_f_pick"></span> per year.</p>
+
+      <hr>
+      <style type="text/css">
+      #table1{
+        border : 5px solid transparent;
+        position: relative;
+      }
+
+      @keyframes shake{
+        0%   {left:-10px;}
+        10%   {left:10px;}
+        20%   {left:-10px;}
+        30%   {left:10px;}
+        40%   {left:-10px;}
+        50%   {left:10px;}
+        60%   {left:-10px;}
+        70%   {left:10px;}
+        80%   {left:-10px;}
+        90%   {left:10px;}
+        100%   {left:0px;}
+      }
+
+      @-webkit-keyframes shake{
+        0%   {left:-10px;}
+        10%   {left:10px;}
+        20%   {left:-10px;}
+        30%   {left:10px;}
+        40%   {left:-10px;}
+        50%   {left:10px;}
+        60%   {left:-10px;}
+        70%   {left:10px;}
+        80%   {left:-10px;}
+        90%   {left:10px;}
+        100%   {left:0px;}
+      }
+      #table1:target{
+        animation: shake 1s;
+        -webkit-animation: shake 1s; /* Safari and Chrome */
+      }
+
+      </style>
+      <p> Table 1: Northern Gateway’s summary of representative parameters for oil spill probabilities. <i>Click</i> a row to change the graph above.</p>
+      <table id='table1' class="table table-hover" style="background:#ccc;">
+      <thead style="background:#F89D00;">
+        <td>Spill Type</td>
+        <td>Return Period</td>
+        <td>Annual Probability</td>
+        <td>Page Reference</td>
+      </thead>
+      <tr data-click="60">
+        <td>Oil Pipeline, Other Spills</td>
+        <td>4 years</td>
+        <td>25%</td>
+        <td><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.pdf" target="_blank">page 67</a> (<a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s54" target="_blank">html</a>)</td>
+      </tr>
+      <tr data-click="34">
+        <td>Marine Terminal Spill</td>
+        <td>61 years</td>
+        <td>1.64%</td>
+        <td><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.pdf" target="_blank">page 67</a> (<a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s54" target="_blank">html</a>)</td>
+      </tr>
+      <tr data-click="9">
+        <td>Oil Pipeline, Full-bore Rupture</td>
+        <td>240 years</td>
+        <td>0.417%</td>
+        <td><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.pdf" target="_blank">page 67</a> (<a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s54" target="_blank">html</a>)</td>
+      </tr>
+      <tr data-click="9">
+        <td>Tanker Spill (any size)</td>
+        <td>250 years</td>
+        <td>0.4%</td>
+        <td><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.pdf" target="_blank">page 60</a> (<a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s51" target="_blank">html</a>)</td>
+      </tr>
+      <tr data-click="5">
+        <td>Full-Bore Rupture, Oil Pipeline</td>
+        <td>464 years</td>
+        <td>0.2%</td>
+        <td><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.pdf" target="_blank">page 60</a> (<a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/dcmnt/rcmndtnsrprt/rcmndtnsrprtvlm1-eng.html#s51" target="_blank">html</a>)</td>
+      </tr>
+      </table>
+
+      <div icare=">2">
+      <hr>
+      <h4>Special Thanks</h4>
+      <dl class="dl-horizontal">
+        <dt>Tangle.js</dt><dd><a href="http://worrydream.com/Tangle/" tagret="_blank">http://worrydream.com/Tangle/</a></dd>
+        <dt>d3.js</dt><dd><a href="http://d3js.org/" tagret="_blank">http://d3js.org/</a></dd>
+        <dt>Collision Detection</dt><dd><a href="http://bl.ocks.org/mbostock/3231298" tagret="_blank">http://bl.ocks.org/mbostock/3231298</a></dd>
+        <dt>Family</dt><dd>and time over the holidays!</dd>
+      </dl>
+      <hr>
+      <h4>Some Extra Reading</h4>
+      <dl class="dl-horizontal">
+        <dt>Review Panel Report</dt><dd><a href="http://gatewaypanel.review-examen.gc.ca/clf-nsi/hm-eng.html" tagret="_blank">http://gatewaypanel.review-examen.gc.ca/clf-nsi/hm-eng.html</a></dd>
+        <dt>Dogwood Initiative</dt><dd><a href="http://dogwoodinitiative.org/no-tankers/learn-more" tagret="_blank">http://dogwoodinitiative.org/no-tankers/learn-more</a></dd>
+        <dt>Wikipedia</dt><dd><a href="http://en.wikipedia.org/wiki/Kalamazoo_River_oil_spill" tagret="_blank">http://en.wikipedia.org/wiki/Kalamazoo_River_oil_spill</a></dd>
+      </dl>
+      </div>
+    </div>
+
+    <div icare="=1">
+      <div id="myBlotch" style="position:fixed;top:0;left:0;"></div>
+    </div>
+
+
+    <div icare="=5">
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="/s/js/Tangle.js"></script>
+<script src="/s/js/d3.v3.js"></script>
+<script src="/s/js/plot.js"></script>
+<script src="/s/js/d3.blotch.js"></script>
+<script src="/s/js/jquery-1.10.2.min.js"></script>
+<script src="/s/js/doicare.js"></script>
+<script type="text/javascript">
+
+var max_years = 550;
+var p_fs = d3.merge([d3.range(0.001,0.002,0.0002),d3.range(0.002,0.02,0.0005),d3.range(0.02,0.1,0.005),d3.range(0.1,0.55,0.05)]);
+var data = d3.range(max_years);
+$("span[data-format|='p_f_pick']").attr('data-min',"0").attr('data-max',''+(p_fs.length-2));
+
+
+Tangle.formats.p_f_pick = function (value) {
+    return sprintf('%2.2f%%', p_fs[Math.round(value)]*100);
+};
+
+var figure1 = plot("#figure1",{xlim:[0,max_years],ylim:[0,1],ylabel:"Probability of No Spill",xlabel:"Years"})
+// var figure2 = plot("#figure2",{xlim:[0,max_years],ylim:[0.5, 1],xlabel:"Years",ylabel:"Probability of No Spill"})
+
+figure1.chart.append("path")
+  .datum([0,max_years])
+  .attr("stroke", "#333").attr("stroke-dasharray","5,5")
+  .attr("d", d3.svg.line()
+    .x(function(d) { return figure1.x(d); })
+    .y(function(d) { return figure1.y(0.5); }));
+figure1.chart.append("text")
+  .attr("x", figure1.x(max_years-10))
+  .attr("y", figure1.y(0.52))
+  .style("text-anchor", "end")
+  .text("Coin Toss");
+figure1.svg.append('rect')
+  .attr("x", figure1.width-130)
+  .attr("y", 0)
+  .attr("fill","transparent")
+  .attr("stroke","black")
+  .attr("width", 130)
+  .attr("height", 50);
+figure1.svg.append("circle")
+  .attr("r", 4.5)
+  .attr("fill", 'red')
+  .attr("cx",figure1.width-117.5)
+  .attr("cy",14.5)
+figure1.svg.append("circle")
+  .attr("r", 4.5)
+  .attr("fill", '#333')
+  .attr("cx",figure1.width-117.5)
+  .attr("cy",35.5)
+
+
+var path,point,expectedVal;
+
+var model = {
+    initialize: function () {
+        this.p_f_pick = 9;
+        this.p_f_pick_50 = 9;
+        this.p_f_pick_years = 9;
+        this.beta = 85;
+        this.years2fail = 30;
+        this.years2fail_enbridge = 500;
+        this.oilspill_per_enbridge = 0.63;
+    },
+    update: function () {
+        var p_f = p_fs[Math.round(this.p_f_pick)];
+        var p_f_50 = p_fs[Math.round(this.p_f_pick_50)];
+        var p_f_years = p_fs[Math.round(this.p_f_pick_years)];
+        var p_s = 1-p_f;
+        var p_s_50 = 1-p_f_50;
+        var p_s_years = 1-p_f_years;
+        var beta = this.beta/100;
+
+        this.years2fail_p = Math.pow(p_s_years,this.years2fail)
+        this.years2fail_enbridge = 1/p_f
+        this.diff = 1/p_f - Math.log(beta)/Math.log(p_s);
+
+        this.et2fail = Math.log(beta)/Math.log(p_s);
+        this.et2fail_50 = Math.log(0.5)/Math.log(p_s_50);
+
+        this.oilspill_per_enbridge = 1 - Math.pow(p_s,this.years2fail_enbridge)
+
+        def = function(d){return Math.pow(p_s,d);}
+        if(path){
+          path.remove();point.remove();expectedVal.remove();
+        }
+        path = figure1.chart.append("path")
+          .datum(data)
+          .attr("class", "line")
+          .attr("d", d3.svg.line()
+            .x(function(d) { return figure1.x(d); })
+            .y(function(d) { return figure1.y(def(d)); }));
+        expectedVal = figure1.chart.append("circle")
+          .attr("r", 4.5)
+          .attr("fill", '#333')
+          .attr("cx",figure1.x(1/(1-p_s)))
+          .attr("cy",figure1.y(def(1/(1-p_s))))
+        point = figure1.chart.append("circle")
+          .attr("r", 4.5)
+          .attr("fill", 'red')
+          .attr("cx",figure1.x(this.et2fail))
+          .attr("cy",figure1.y(def(this.et2fail)))
+    }
+};
+var TK = new Tangle(document.getElementById("probability-of-a-spill"),model);
+
+
+$('.table [data-click]').css({'cursor':'pointer'}).click(function(c){
+  TK.setValue('p_f_pick',parseFloat($(this).attr('data-click')));
+})
+
+var myBlotch = blotch('#myBlotch');
+
+(new DoICare('doicare', 2)).onUpdate(function(cl){
+  if(cl == 1){
+    myBlotch.clearOil();
+  }
+});
+
+</script>
